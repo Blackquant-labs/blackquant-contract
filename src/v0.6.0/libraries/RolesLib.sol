@@ -2,11 +2,20 @@
 pragma solidity 0.8.26;
 
 import {Roles} from "../Roles.sol";
-import {OnlySafe, OnlySecurityCouncil, OnlyValuationManager, OnlyWhitelistManager} from "../primitives/Errors.sol";
+import {
+    OnlySafe,
+    OnlySecurityCouncil,
+    OnlyValuationManager,
+    OnlyWhitelistManager,
+    SafeUpdateLocked,
+    SuperOperatorUpdateLocked
+} from "../primitives/Errors.sol";
 import {
     FeeReceiverUpdated,
+    SafeLocked,
     SafeUpdated,
     SecurityCouncilUpdated,
+    SuperOperatorLocked,
     SuperOperatorUpdated,
     ValuationManagerUpdated,
     WhitelistManagerUpdated
@@ -99,6 +108,7 @@ library RolesLib {
         address _safe
     ) public {
         Roles.RolesStorage storage $ = _getRolesStorage();
+        if ($.safeLocked) revert SafeUpdateLocked();
         emit SafeUpdated($.safe, _safe);
         $.safe = _safe;
     }
@@ -119,8 +129,23 @@ library RolesLib {
         address _superOperator
     ) public {
         Roles.RolesStorage storage $ = _getRolesStorage();
+        if ($.superOperatorLocked) revert SuperOperatorUpdateLocked();
         emit SuperOperatorUpdated($.superOperator, _superOperator);
         $.superOperator = _superOperator;
+    }
+
+    /// @notice Permanently locks the ability to update the safe address
+    function lockUpdateSafe() public {
+        Roles.RolesStorage storage $ = _getRolesStorage();
+        $.safeLocked = true;
+        emit SafeLocked($.safe);
+    }
+
+    /// @notice Permanently locks the ability to update the super operator
+    function lockSuperOperator() public {
+        Roles.RolesStorage storage $ = _getRolesStorage();
+        $.superOperatorLocked = true;
+        emit SuperOperatorLocked($.superOperator);
     }
 
     /// @notice Checks whether an address is the super operator for a given controller

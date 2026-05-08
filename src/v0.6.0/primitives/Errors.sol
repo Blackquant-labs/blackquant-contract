@@ -122,6 +122,12 @@ error OnlyValuationManager(address valuationManager);
 /// @param securityCouncil The address of the security council.
 error OnlySecurityCouncil(address securityCouncil);
 
+/// @notice The safe address is permanently locked and cannot be updated.
+error SafeUpdateLocked();
+
+/// @notice The super operator is permanently locked and cannot be updated.
+error SuperOperatorUpdateLocked();
+
 // ********************* WHITELISTABLE ********************* //
 
 /// @notice Indicates that the address is not allowed to do the operation.

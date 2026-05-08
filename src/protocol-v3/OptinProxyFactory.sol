@@ -30,7 +30,7 @@ struct OptinProxyFactoryStorage {
 /// @dev Inherits from OwnableUpgradeable to provide ownership functionality
 /// @custom:contact team@hopperlabs.xyz
 /// @custom:oz-upgrades-from src/protocol-v2/OptinProxyFactory.sol:OptinProxyFactory
-contract OptinProxyFactory is OwnableUpgradeable {
+contract OptinProxyFactoryV3 is OwnableUpgradeable {
     /// @notice Emitted when a new proxy is deployed
     /// @param proxy Address of the newly deployed proxy
     /// @param deployer Address that initiated the deployment

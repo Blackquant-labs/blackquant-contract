@@ -28,6 +28,8 @@ abstract contract Roles is Ownable2StepUpgradeable {
         address valuationManager;
         address securityCouncil;
         address superOperator;
+        bool safeLocked;
+        bool superOperatorLocked;
     }
 
     /// @dev Initializes the roles of the vault.
@@ -45,11 +47,13 @@ abstract contract Roles is Ownable2StepUpgradeable {
         $.valuationManager = roles.valuationManager;
         $.securityCouncil = roles.securityCouncil;
         $.superOperator = roles.superOperator;
+        $.safeLocked = roles.safeLocked;
+        $.superOperatorLocked = roles.superOperatorLocked;
     }
 
     /// @dev Returns the storage struct of the roles.
     /// @return _rolesStorage The storage struct of the roles.
-    function getRolesStorage() public pure returns (RolesStorage memory _rolesStorage) {
+    function getRolesStorage() internal pure returns (RolesStorage memory _rolesStorage) {
         _rolesStorage = RolesLib._getRolesStorage();
     }
 
@@ -129,5 +133,17 @@ abstract contract Roles is Ownable2StepUpgradeable {
         address _superOperator
     ) external onlyOwner {
         RolesLib.updateSuperOperator(_superOperator);
+    }
+
+    /// @notice Permanently locks the ability to update the safe address.
+    /// @dev Only the owner can call this function. This action is irreversible.
+    function lockUpdateSafe() external onlyOwner {
+        RolesLib.lockUpdateSafe();
+    }
+
+    /// @notice Permanently locks the ability to update the super operator.
+    /// @dev Only the owner can call this function. This action is irreversible.
+    function lockSuperOperator() external onlyOwner {
+        RolesLib.lockSuperOperator();
     }
 }
