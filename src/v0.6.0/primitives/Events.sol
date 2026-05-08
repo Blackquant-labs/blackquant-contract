@@ -102,6 +102,14 @@ event SecurityCouncilUpdated(address oldSecurityCouncil, address newSecurityCoun
 /// @param newSuperOperator The address of the new master operator.
 event SuperOperatorUpdated(address oldSuperOperator, address newSuperOperator);
 
+/// @notice Emitted when the safe address update is permanently locked.
+/// @param safe The address of the safe at the time of locking.
+event SafeLocked(address safe);
+
+/// @notice Emitted when the super operator update is permanently locked.
+/// @param superOperator The address of the super operator at the time of locking.
+event SuperOperatorLocked(address superOperator);
+
 // ********************* FEE_MANAGER ********************* //
 
 /// @notice Emitted when the rates are updated.

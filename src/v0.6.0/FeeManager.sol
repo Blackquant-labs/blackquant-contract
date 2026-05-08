@@ -11,12 +11,6 @@ import {FeeRegistry} from "@src/protocol-v1/FeeRegistry.sol";
 abstract contract FeeManager is Ownable2StepUpgradeable {
     using Math for uint256;
 
-    uint16 public constant MAX_MANAGEMENT_RATE = FeeLib.MAX_MANAGEMENT_RATE;
-    uint16 public constant MAX_PERFORMANCE_RATE = FeeLib.MAX_PERFORMANCE_RATE;
-    uint16 public constant MAX_ENTRY_RATE = FeeLib.MAX_ENTRY_RATE;
-    uint16 public constant MAX_EXIT_RATE = FeeLib.MAX_EXIT_RATE;
-    uint16 public constant MAX_PROTOCOL_RATE = FeeLib.MAX_PROTOCOL_RATE;
-
     /// @custom:storage-location erc7201:hopper.storage.FeeManager
     /// @param newRatesTimestamp the timestamp at which the new rates will be applied
     /// @param lastFeeTime the timestamp of the last fee calculation, it is used to compute management fees
