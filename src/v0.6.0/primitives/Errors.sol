@@ -58,14 +58,8 @@ error NewTotalAssetsMissing();
 /// @notice Indicates that the new total assets value is not the one expected.
 error WrongNewTotalAssets();
 
-/// @notice Indicates that totalAssets value is outdated and that synchronous deposits are not allowed.
-error OnlyAsyncDepositAllowed();
-
 /// @notice Indicates that the total assets value is expired.
 error TotalAssetsExpired();
-
-/// @notice Indicates that deposit can only happen via the synchronous path.
-error OnlySyncDepositAllowed();
 
 /// @notice Indicates that the max cap is reached.
 error MaxCapReached();

@@ -17,7 +17,6 @@ import {ERC20Lib} from "../libraries/ERC20Lib.sol";
 import {AccessMode, State} from "../primitives/Enums.sol";
 import {
     AddressNotAllowed,
-    AsyncOnly,
     BelowMinimumAssets,
     CantDepositNativeToken,
     Closed,
@@ -142,12 +141,6 @@ contract LagoonVault is ERC7540, Accessable, FeeManager, GuardrailsManager {
         _;
     }
 
-    /// @notice Reverts if totalAssets is valid.
-    modifier onlyAsyncDeposit() {
-        VaultLib._onlyAsyncDeposit();
-        _;
-    }
-
     /// @notice Reverts if totalAssets is expired or sync redeem is not allowed.
     modifier syncRedeemAllowed() {
         VaultLib._syncRedeemAllowed();
@@ -167,7 +160,7 @@ contract LagoonVault is ERC7540, Accessable, FeeManager, GuardrailsManager {
         uint256 assets,
         address controller,
         address owner
-    ) public payable override onlyOperator(owner) whenNotPaused onlyAsyncDeposit returns (uint256 requestId) {
+    ) public payable override onlyOperator(owner) whenNotPaused returns (uint256 requestId) {
         return _requestDeposit(assets, controller, owner, address(0));
     }
 
@@ -181,7 +174,7 @@ contract LagoonVault is ERC7540, Accessable, FeeManager, GuardrailsManager {
         address controller,
         address owner,
         address referral
-    ) public payable onlyOperator(owner) whenNotPaused onlyAsyncDeposit returns (uint256 requestId) {
+    ) public payable onlyOperator(owner) whenNotPaused returns (uint256 requestId) {
         return _requestDeposit(assets, controller, owner, referral);
     }
 
@@ -245,8 +238,6 @@ contract LagoonVault is ERC7540, Accessable, FeeManager, GuardrailsManager {
         if (!isAllowed(receiver)) revert AddressNotAllowed(receiver);
         if (receiver == address(0)) revert InvalidReceiver(receiver);
         ERC7540Storage storage $ = ERC7540Lib._getERC7540Storage();
-
-        if ($.isAsyncOnly) revert AsyncOnly();
 
         uint16 exitRate = FeeLib.feeRates().exitRate;
         // first we need to compute the exit fee

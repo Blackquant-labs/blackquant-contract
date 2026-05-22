@@ -4,15 +4,7 @@ pragma solidity 0.8.26;
 import {ERC7540} from "../ERC7540.sol";
 import {FeeLib} from "../libraries/FeeLib.sol";
 import {State, SyncMode} from "../primitives/Enums.sol";
-import {
-    Closed,
-    NotClosing,
-    NotOpen,
-    OnlyAsyncDepositAllowed,
-    OnlySyncDepositAllowed,
-    SyncOperationNotAllowed,
-    TotalAssetsExpired
-} from "../primitives/Errors.sol";
+import {Closed, NotClosing, NotOpen, SyncOperationNotAllowed, TotalAssetsExpired} from "../primitives/Errors.sol";
 import {StateUpdated} from "../primitives/Events.sol";
 import {VaultStorage} from "../primitives/VaultStorage.sol";
 import {ERC7540Lib} from "./ERC7540Lib.sol";
@@ -77,14 +69,6 @@ library VaultLib {
         }
         if (!ERC7540Lib.isTotalAssetsValid()) {
             revert TotalAssetsExpired();
-        }
-    }
-
-    /// @dev Reverts if total assets is valid (meaning sync deposit should be used instead)
-    function _onlyAsyncDeposit() internal view {
-        // if total assets is valid we can only do synchronous deposit
-        if (ERC7540Lib.isTotalAssetsValid()) {
-            revert OnlySyncDepositAllowed();
         }
     }
 
