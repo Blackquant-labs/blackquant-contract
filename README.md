@@ -1,8 +1,8 @@
-# Lagoon Protocol - Smart Contracts
+# BlackQuant Labs - Smart Contracts
 
-Source code for the Lagoon Protocol ERC7540-compliant tokenized vault.
+Source code for the BlackQuant Labs ERC7540-compliant tokenized vault.
 
-For documentation, visit [docs.lagoon.finance](https://docs.lagoon.finance/).
+<!-- For documentation, visit [docs.lagoon.finance](https://docs.lagoon.finance/). -->
 
 ## Repository Structure
 
@@ -27,7 +27,7 @@ forge build
 
 ## Audits
 
-See [docs.lagoon.finance/resources/audits](https://docs.lagoon.finance/resources/audits).
+<!-- See [docs.lagoon.finance/resources/audits](https://docs.lagoon.finance/resources/audits). -->
 
 ## License
 
